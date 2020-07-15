@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {View, Text, TextInput, StyleSheet, Button} from 'react-native'
+import {View, Text, TextInput, StyleSheet, Button, Modal} from 'react-native'
 
 
 const GoalInput = props => {
@@ -10,15 +10,22 @@ const GoalInput = props => {
     setEnteredGoal(enteredText)
   }
 
+  const addGoalHandler = () => {
+    props.addGoal(enteredGoal)
+  }
+
   return(
+    <Modal visible={props.visible} animationType="slide">
     <View style={styles.inputContainer}>
       <TextInput placeholder="text"
         style={styles.textInput}
         onChangeText={goalInputHandler}
         value={enteredGoal} />
       <Button title="add"
-        onPress={props.addGoal.bind(this, enteredGoal)} />
+        onPress={addGoalHandler} />
+        <Button title="cancel" onPress={props.cancel}/>
     </View>
+    </Modal>
   )
 }
 
@@ -30,12 +37,13 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     borderRadius: 10,
     width: 200,
+    height: 30,
     borderColor: 'grey',
     borderWidth: 1
   },
   inputContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center'
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
